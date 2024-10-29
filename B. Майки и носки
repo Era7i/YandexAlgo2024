@@ -1,0 +1,38 @@
+#include <iostream>
+#include <fstream>
+#include <list>
+#include <vector>
+
+int main() {
+    std::ifstream inputFile("input.txt");
+    std::ofstream outputFile("output.txt");
+    int A, B, C, D;
+    std::vector<std::list<int>> ans;
+    inputFile >> A >> B >> C >> D;
+    if (A > 0 && C > 0) {
+        ans.push_back({B + 1, D + 1});
+    }
+    if (B > 0 && D > 0) {
+        ans.push_back({A + 1, C + 1});
+    }
+    if (A > 0 && B > 0) {
+        ans.push_back({std::max(A, B) + 1, 1});
+    }
+    if (C > 0 && D > 0) {
+        ans.push_back({1, std::max(C, D) + 1});
+    }
+
+    int sum = 0;
+    std::string ans3 = "";
+
+    for(std::vector<std::list<int>>::iterator i = ans.begin(); i != ans.end(); i++) {
+        if(sum == 0 || i->front() + i->back() < sum) {
+            sum = i->front() + i->back();
+            ans3 = std::to_string(i->front()) + " " + std::to_string(i->back());
+        } 
+    }
+    outputFile << ans3;
+    inputFile.close();
+    outputFile.close();
+    return 0;
+}
