@@ -2,6 +2,9 @@
 #include <fstream>
 #include <list>
 #include <vector>
+#include <algorithm>
+
+
 
 int main() {
     std::ifstream inputFile("input.txt");
@@ -25,13 +28,9 @@ int main() {
     int sum = 0;
     std::string ans3 = "";
 
-    for(std::vector<std::list<int>>::iterator i = ans.begin(); i != ans.end(); i++) {
-        if(sum == 0 || i->front() + i->back() < sum) {
-            sum = i->front() + i->back();
-            ans3 = std::to_string(i->front()) + " " + std::to_string(i->back());
-        } 
-    }
-    outputFile << ans3;
+    std::sort(ans.begin(), ans.end(), [](std::list<int>a, std::list<int>b){return a.front() + a.back() < b.front() + b.back();});
+
+    outputFile << std::to_string(ans[0].front()) + " " + std::to_string(ans[0].back());
     inputFile.close();
     outputFile.close();
     return 0;
